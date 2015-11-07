@@ -189,4 +189,4 @@ cd $CWD
 cat slack-desc > $PKG/install/slack-desc
 
 cd $PKG
-/sbin/makepkg $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.${PKGTYPE:-tgz}
+/sbin/makepkg $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.${PKGTYPE:-txz}
