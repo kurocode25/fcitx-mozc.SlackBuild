@@ -94,7 +94,7 @@ unzip jigyosyo-${ZIPCODE_REL}.zip
 tar -xvf fcitx-mozc-icon.tar.gz
 mv trunk japanese_usage_dictionary
 
-echo "make checksum.md5 ..."
+echo "checking md5sum ..."
 md5sum -c checksum.md5
 
 echo -n "Do you continue ? (y/n)"
