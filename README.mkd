@@ -1,0 +1,2 @@
+# fcitx-mozc.SlackBuild
+fcitx-mozc build script for Slackware
