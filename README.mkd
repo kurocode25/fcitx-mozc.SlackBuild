@@ -14,7 +14,7 @@ Dependency packages are as follows.
 * ninja
 * zinnia
 
-fcitx-mozc requires fcitx version >= 2.8.
+fcitx-mozc requires fcitx version >= 4.2.8.
 If you use fcitx-mozc on a desktop enviromnent based on qt framework (ex. KDE), you need kcm-fcitx.
 
 
