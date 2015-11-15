@@ -1,0 +1,7 @@
+Fcitx-mozc is Mozc engin for fcitx. Mozc is a Japanese Input Method Editor designed for multi-platform.
+
+Dependences:
+fcitx-mozc requires fcitx version >= 2.8.
+If you use fcitx-mozc on a desktop enviromnent based on qt framework (ex. KDE), you need kcm-fcitx.
+
+
