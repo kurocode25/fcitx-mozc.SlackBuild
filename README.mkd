@@ -1,9 +1,9 @@
 fcitx-mozc.SlackBuild
 =====================
-## About fcitx-mozc.SlackBuild
+## About this script
 This script is written for build fcitx-mozc package of Slackware 14.1.
 
-## Fcitx-mozc
+## What's Fcitx-mozc
 Fcitx-mozc is Mozc engin for fcitx. Mozc is a Japanese Input Method Editor designed for multi-platform.
 
 ## Dependences:
