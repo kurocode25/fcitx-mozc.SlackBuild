@@ -53,7 +53,6 @@ FCITX_PATCH_VER=2.17.2102.102.1
 # check fcitx version
 echo "checking fcitx version ..."
 FCITXVER=`fcitx -v | sed 's/fcitx version: \([0-9]*\)\.\([0-9]*\)\.\([0-9]*\)/\1 \2 \3/' | xargs printf "%02d%02d%02d" | xargs expr 1 \* `
-echo $FCITXVER
 if [ $FCITXVER -ge 40208 ]; then
        echo "fcitx version OK"
 else
@@ -98,14 +97,23 @@ echo "checking md5sum ..."
 md5sum -c checksum.md5
 
 echo -n "Do you continue ? (y/n)"
-read ans
-if [ "$ans" = "n" ]; then
-	echo "interrupted.."
-	exit 1
-elif [ "$ans" = "y" ]; then
-	echo "continue ..."
-fi
-echo "prepare making package ..."
+while true
+do
+    echo "Do you continue ?(y/n)"
+    read ans
+    if [ $ans = "y" ] 
+    then
+        break
+    elif [ $ans = "n" ]
+    then
+        echo "procedures is canceled."
+        exit 1
+    else
+        echo "Please input \"y\" or \"n\""
+        continue
+    fi
+done
+echo "preparing to make package ..."
 cd mozc/src
 
 # Apply fcitx patch
