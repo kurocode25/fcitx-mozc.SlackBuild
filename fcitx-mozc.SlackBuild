@@ -40,6 +40,25 @@ PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 BLDTYPE=Release
 
+if [ "$ARCH" = "i486" ]; then
+  SLKCFLAGS="-O2 -march=i486 -mtune=i686"
+  LIBDIRSUFFIX=""
+elif [ "$ARCH" = "i686" ]; then
+  SLKCFLAGS="-O2 -march=i686 -mtune=i686"
+  LIBDIRSUFFIX=""
+elif [ "$ARCH" = "x86_64" ]; then
+  SLKCFLAGS="-O2 -fPIC"
+  LIBDIRSUFFIX="64"
+else
+  SLKCFLAGS="-O2"
+  LIBDIRSUFFIX=""
+fi
+
+# paramater of Qt dir.
+RCC_LOC=`pkg-config QtCore --variable=rcc_location`
+QT4DIR=${RCC_LOC%%/bin/rcc}
+QT4I=`pkg-config QtGui --cflags-only-I`
+
 ZIPCODE_REL=201504
 PROTOBUF_REV=172019c40bf548908ab09bfd276074c929d48415
 GYP_REV=cdf037c1edc0ba3b5d25f8e3973661efe00980cc
@@ -93,7 +112,7 @@ unzip jigyosyo-${ZIPCODE_REL}.zip
 tar -xvf fcitx-mozc-icon.tar.gz
 mv trunk japanese_usage_dictionary
 
-echo "checking md5sum ..."
+jcho "checking md5sum ..."
 md5sum -c checksum.md5
 
 echo -n "Do you continue ? (y/n)"
@@ -138,20 +157,14 @@ done
 install -D jsr305-$JSR305_VER.jar mozc/src/third_party/jsr305/jsr305-$JSR305_VER.jar
 
 echo "build package..."
-# Update: Fix qt4 include path too
-# Fix compatibility with google-glog 0.3.3 (symbol conflict)
-CFLAGS="${CFLAGS} -I/usr/lib/qt/include -fvisibility=hidden"
-CXXFLAGS="${CXXFLAGS} -I/usr/lib/qt/include -fvisibility=hidden"
-# CFLAGS+=" $_qti"
-# CXXFLAGS+=" $_qti"
+CFLAGS="${CFLAGS} $QT4I -fvisibility=hidden"
+CXXFLAGS="${CXXFLAGS} $QT4I -fvisibility=hidden"
 
-# CFLAGS="${CFLAGS} -I/usr/include/qt4 -fvisibility=hidden"
-# CXXFLAGS="${CXXFLAGS} -I/usr/include/qt4 -fvisibility=hidden"
 cd mozc/src
 
 _targets="server/server.gyp:mozc_server gui/gui.gyp:mozc_tool unix/fcitx/fcitx.gyp:fcitx-mozc"
 
-QTDIR=/usr/lib/qt GYP_DEFINES="document_dir=/usr/share/licenses/$pkgname" python2 build_mozc.py gyp
+QTDIR=$QT4DIR GYP_DEFINES="document_dir=/usr/share/licenses/$pkgname" python2 build_mozc.py gyp
 sed -i 's|command = $cxx -MMD -MF $out.d $defines $includes $cflags $cflags_cc $cflags_pch_cc -c $in -o $out|command = $cxx -MMD -MF $out.d $defines $includes -D__STRICT_ANSI__ $cflags $cflags_cc $cflags_pch_cc -c $in -o $out|' out_linux/Release/build.ninja
 python2 build_mozc.py build -c $BLDTYPE -j 8 $_targets
 
@@ -174,7 +187,7 @@ do
   install -D -m 644 "$mofile" "${PKG}/usr/share/locale/$lang/LC_MESSAGES/fcitx-mozc.mo"
 done
 
-install -D -m 755 out_linux/${BLDTYPE}/fcitx-mozc.so "${PKG}/usr/lib/fcitx/fcitx-mozc.so"
+install -D -m 755 out_linux/${BLDTYPE}/fcitx-mozc.so "${PKG}/usr/lib${LIBDIRSUFFIX}/fcitx/fcitx-mozc.so"
 install -D -m 644 unix/fcitx/fcitx-mozc.conf "${PKG}/usr/share/fcitx/addon/fcitx-mozc.conf"
 install -D -m 644 unix/fcitx/mozc.conf "${PKG}/usr/share/fcitx/inputmethod/mozc.conf"
 
