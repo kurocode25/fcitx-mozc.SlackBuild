@@ -1,20 +1,35 @@
-fcitx-mozc.SlackBuild
+fcitx-mozc Slackbuild
 =====================
-## About this script
-This script is written for build fcitx-mozc package of Slackware 14.1.
 
-## What's Fcitx-mozc
-Fcitx-mozc is Mozc engin for fcitx. Mozc is a Japanese Input Method Editor designed for multi-platform.
+### About
 
-## Dependences:
-Dependency packages are as follows.
+This script is fcix-mozc SlackBuild file for Slackware 15.0.
 
-* fcitx
-* fcitx-configtool
-* ninja
-* zinnia
+### Usage
 
-fcitx-mozc requires fcitx version >= 4.2.8.
-If you use fcitx-mozc on a desktop enviromnent based on qt framework (ex. KDE), you need kcm-fcitx.
+#### Build Package
 
+For build package, you just run fcitx-mozc.SlackBuild file
 
+\[example\]
+
+```
+$ git clone https://github.com/kurocode25/fcitx-mozc.SlackBuild.git
+$ cd fcitx-mozc.SlackBuild
+$ sh ./fcitx-mozc.SlackBuild
+```
+
+if build process success, tgz package is created in current directory.
+
+#### Install Package
+
+You can install by pkgtool or installpkg command. 
+
+\[example\]
+
+```
+root# installpkg ./fcitx-mozc-2.26.4220.102.1-i586-1_Kuro.tgz
+```
+
+### Licence
+[MIT](https://opensource.org/licenses/mit-license.php) &copy; [kuro_CODE25](https://github.com/kurocode25)
